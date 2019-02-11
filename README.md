@@ -6,7 +6,7 @@ The code is designed to be extended easily. You can change the code such as inpu
 <p align="center">
   <img src="./structure/None U-Net Structure.png" width="700" title="hover text">
 </p>
-  <div>Graph 1: None U-Net Structure</div>
+  <div align="center">Graph 1: None U-Net Structure</div>
  <div>
 None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need to use CNN to capture condition images’ features. The counts of CNN layers are the more the better, which are depended on our graphic card. The short coming of None U-net structure is the G loss is higher than D loss.
  </div>
@@ -37,7 +37,7 @@ We can use dataset-tool to change the dataset into tf-record format. Put faceA t
 <p align="center">
   <img src="./structure/datacapture.png" width="700" title="hover text">
 </p>
-<div align="center">Graph 3</div>
+<div align="center">Graph 3: DataCapture</div>
 
 <h2>Training</h2>
 Please install python3.6 , tensorflow-gpu, CUDA, cudnn and other libraries in requirement-pip.txt.Input the below code to install libraries and start training.
