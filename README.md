@@ -5,7 +5,7 @@ The code is designed to be extended easily. You can change the code such as inpu
 <p align="center">
   <img src="./structure/None U-Net Structure.png" width="700" title="hover text">
 </p>
-  <span align="center">Graph 1: None U-Net Structure</span>
+  <div>Graph 1: None U-Net Structure</div>
  <div>
 None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need to use CNN to capture condition images’ features. The counts of CNN layers are the more the better, which are depended on our graphic card. The short coming of None U-net structure is the G loss is higher than D loss.
  </div>
@@ -13,7 +13,7 @@ None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need
  <p align="center">
   <img src="./structure/U-Net Structure.png" width="700" title="hover text">
 </p>
-<span align="center">Graph 2: U-Net Structure</span>
+<div align="center">Graph 2: U-Net Structure</div>
 <div>
 U-Net Structure is a better way to implement Pix2Pix PGGAN. The feature of U-Net Structure is wo concatenate specific layers of G based on None U-Net structure. The U-Net Structure can reduce the G loss and get better results. The short coming of U-Net structure is it will take more time on training.
  </div>
@@ -38,4 +38,30 @@ We can use dataset-tool to change the dataset into tf-record format. Put faceA t
 <p align="center">
   <img src="./structure/datacapture.png" width="700" title="hover text">
 </p>
-<span align="center">Graph 3: datacapture</span>
+<div align="center">Graph 3</div>
+
+ # Training
+Please install python3.6 , tensorflow-gpu, CUDA, cudnn and other libraries in requirement-pip.txt.Input the below code to install libraries and start training.
+<pre><code>
+pip install tensorflow-gpu
+</code></pre>
+<pre><code>
+pip install -r requirement-pip.txt
+</code></pre>
+<pre><code>
+python train.py
+</code></pre>
+
+Here is my training environment.
+<div>
+GPU	GTX 1080Ti
+  </div>
+  <div>
+RAM	16GB
+  </div>
+  <div>
+CUDA	9.0
+  </div>
+  <div>
+cudnn	7.1.3
+  </div>
