@@ -20,7 +20,7 @@ class EasyDict(dict):
 
 faceA_dir = './dataset/faceA'
 faceB_dir = './dataset/faceB'
-result_dir = ''
+result_dir = './results/'
 
 #----------------------------------------------------------------------------
 # TensorFlow options.
@@ -58,10 +58,8 @@ grid        = EasyDict(size='1080p', layout='random')       # Options for train.
 #dataset's tfrecord_dir must be absolute dir.
 # Dataset (choose one).
 #desc += '-celebahq';            dataset = EasyDict(tfrecord_dir='celebahq'); train.mirror_augment = True
-desc += '-faceA';              faceAset = EasyDict(tfrecord_dir='C:/Users/akila/Desktop/gan/progressive_growing_of_gans-master-retest/dataset/faceA'); train.mirror_augment = True
-#desc += '-face';                 faceset = EasyDict(tfrecord_dir='C:/Users/akila/Desktop/gan/progressive_growing_of_gans-master-retest/dataset/fullface'); train.mirror_augment = True
-desc += '-faceB';                 faceBset = EasyDict(tfrecord_dir='C:/Users/akila/Desktop/gan/progressive_growing_of_gans-master-retest/dataset/faceB'); train.mirror_augment = True
-# desc += '-pose';                 poseset = EasyDict(tfrecord_dir='C:/Users/akila/Desktop/gan/progressive_growing_of_gans-master-retest/dataset/humanpose'); train.mirror_augment = True
+desc += '-faceA';              faceAset = EasyDict(tfrecord_dir='./dataset/faceA'); train.mirror_augment = True
+desc += '-faceB';                 faceBset = EasyDict(tfrecord_dir='./dataset/faceB'); train.mirror_augment = True
 #desc += '-cifar10';             dataset = EasyDict(tfrecord_dir='cifar10')
 #desc += '-cifar100';            dataset = EasyDict(tfrecord_dir='cifar100')
 #desc += '-svhn';                dataset = EasyDict(tfrecord_dir='svhn')

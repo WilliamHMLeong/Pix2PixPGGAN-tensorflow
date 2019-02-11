@@ -29,7 +29,7 @@ import loss
 
 def setup_snapshot_image_grid(G, faceB_set,faceA_set,
     size    = '1080p',      # '1080p' = to be viewed on 1080p display, '4k' = to be viewed on 4k display.
-    ):    # 'random' = grid contents are selected randomly, 'row_per_class' = each row corresponds to one class label.
+    layout='row_per_class'):    # 'random' = grid contents are selected randomly, 'row_per_class' = each row corresponds to one class label.
 
     gw = 1; gh = 1
     if size == '1080p':
@@ -80,8 +80,7 @@ def process_reals(x, lod, mirror_augment, drange_data, drange_net):
             y = tf.reduce_mean(y, axis=[3, 5], keepdims=True)
             y = tf.tile(y, [1, 1, 1, 2, 1, 2])
             y = tf.reshape(y, [-1, s[1], s[2], s[3]])
-            print("y")
-            print(y.shape)
+
             x = tfutil.lerp(x, y, lod - tf.floor(lod))
         with tf.name_scope('UpscaleLOD'): # Upscale to match the expected input/output size of the networks.
             s = tf.shape(x)
@@ -202,7 +201,7 @@ def train_progressive_gan(
         with tf.name_scope('GPU%d' % gpu), tf.device('/gpu:%d' % gpu):
             G_gpu = G if gpu == 0 else G.clone(G.name + '_shadow')
             D_gpu = D if gpu == 0 else D.clone(D.name + '_shadow')
-            print(lod_in)
+
             lod_assign_ops = [tf.assign(G_gpu.find_var('lod'), lod_in), tf.assign(D_gpu.find_var('lod'), lod_in)]
             features_gpu = process_reals(features_split[gpu], lod_in, mirror_augment, feature_set.dynamic_range, drange_net)
             reals_gpu = process_reals(reals_split[gpu], lod_in, mirror_augment, training_set.dynamic_range, drange_net)
@@ -211,7 +210,7 @@ def train_progressive_gan(
             with tf.name_scope('G_loss'), tf.control_dependencies(lod_assign_ops):
                 G_loss,generate_y = tfutil.call_func_by_name(G=G_gpu, D=D_gpu, opt=G_opt, training_set=training_set, minibatch_size=minibatch_split,faceB = reals_gpu,faceA = features_gpu,**config.G_loss)
             with tf.name_scope('D_loss'), tf.control_dependencies(lod_assign_ops):
-                D_loss = tfutil.call_func_by_name(G=G_gpu, D=D_gpu, opt=D_opt, training_set=training_set, minibatch_size=minibatch_split, reals=reals_gpu, labels=labels_gpu, features = features_gpu,generate_y = generate_y,varforgauss = varforgauss,**config.D_loss)
+                D_loss = tfutil.call_func_by_name(G=G_gpu, D=D_gpu, opt=D_opt, training_set=training_set, minibatch_size=minibatch_split, faceB=reals_gpu, labels=labels_gpu, faceA = features_gpu,generate_y = generate_y,varforgauss = varforgauss,**config.D_loss)
             G_opt.register_gradients(tf.reduce_mean(G_loss), G_gpu.trainables)
             D_opt.register_gradients(tf.reduce_mean(D_loss), D_gpu.trainables)
 
@@ -222,7 +221,7 @@ def train_progressive_gan(
     print('Setting up snapshot image grid...')
     grid_size, grid_reals, grid_labels, grid_latents,grid_facereals,grid_facelabels = setup_snapshot_image_grid(G, training_set,feature_set, **config.grid)
     sched = TrainingSchedule(total_kimg * 1000, training_set,feature_set, **config.sched)
-    #grid_latents = np.transpose(grid_latents,[0,2,3,1])
+
     grid_fakes = Gs.run(grid_latents, grid_labels,grid_reals, minibatch_size=sched.minibatch//config.num_gpus)
 
     print('Setting up result dir...')
