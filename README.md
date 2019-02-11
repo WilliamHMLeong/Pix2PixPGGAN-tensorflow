@@ -41,14 +41,11 @@ We can use dataset-tool to change the dataset into tf-record format. Put faceA t
 
 <h2>Training</h2>
 Please install python3.6 , tensorflow-gpu, CUDA, cudnn and other libraries in requirement-pip.txt.Input the below code to install libraries and start training.
-<pre><code>
-pip install tensorflow-gpu
+<pre><code>pip install tensorflow-gpu
 </code></pre>
-<pre><code>
-pip install -r requirement-pip.txt
+<pre><code>pip install -r requirement-pip.txt
 </code></pre>
-<pre><code>
-python train.py
+<pre><code>python train.py
 </code></pre>
 
 Here is my training environment.
@@ -66,6 +63,24 @@ cudnn:7.1.3
   </div>
   
 <h2>Results</h2>
+<p align="center">
+  <img src="./sample/input1.png" width="200" title="hover text">
+  <img src="./sample/input2.png" width="200" title="hover text">
+  <img src="./sample/input3.png" width="200" title="hover text">
+</p>
+  <div align="center">Graph 4: Inputs</div>
+  <p align="center">
+  <img src="./sample/output1.png" width="200" title="hover text">
+  <img src="./sample/output2.png" width="200" title="hover text">
+  <img src="./sample/output3.png" width="200" title="hover text">
+</p>
+  <div align="center">Graph 5: Outputs</div>
+  <p align="center">
+  <img src="./sample/target1.png" width="200" title="hover text">
+  <img src="./sample/target2.png" width="200" title="hover text">
+  <img src="./sample/target3.png" width="200" title="hover text">
+</p>
+  <div align="center">Graph 6: targets</div>
   <div>
   None U-Net structure results are still in training, here is the intermediate results.
 </div>
