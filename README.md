@@ -82,8 +82,9 @@ cudnn:7.1.3
 </p>
   <div align="center">Graph 6: targets</div>
   <div>
-  None U-Net structure results are still in training, here is the intermediate results.
+  None U-Net structure results are still in training, here is the intermediate training results. The weight file can be download in this url.
 </div>
+<strong><a href="https://research.nvidia.com/publication/2017-10_Progressive-Growing-of">https://research.nvidia.com/publication/2017-10_Progressive-Growing-of</a></strong>
 <div>
   U-Net structure results are coming soon.
   </div>
