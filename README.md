@@ -18,6 +18,7 @@ None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need
 U-Net Structure is a better way to implement Pix2Pix PGGAN. The feature of U-Net Structure is wo concatenate specific layers of G based on None U-Net structure. The U-Net Structure can reduce the G loss and get better results. The short coming of U-Net structure is it will take more time on training.
  </div>
 # Data preparation
+
  Celeba-HQ dataset’s 20,000 images are used as targets in the demo. Face edges images(condition images) with hair color masks are captured by Celeba-HQ dataset. Hair color masks are captured by using M-RCNN released by Facebook.
 We can download Celeba-HQ in this url.
 <div>
@@ -66,16 +67,16 @@ CUDA:9.0
 cudnn:7.1.3
   </div>
   
-  # Results
+ # Results
   <div>
   None U-Net structure results are still in training, here is the intermediate results.
 </div>
 <div>
   U-Net structure results are coming soon.
   </div>
-  # Testing
+ # Testing
   You can run import_example.py to input images, then generate specific outputs. For more details, you can read the code.
-  # Future Works
+ # Future Works
   <ul>
   <li>Release an enhancer to make the results more beautiful.
   </li>
@@ -88,3 +89,13 @@ cudnn:7.1.3
   <li>What’s more, we can use this network to generate people with specific clothes. It’s difficult to get precise results, but it’s one more way to achieve this goal.
   </li>
 </ul>
+
+# Contact
+<div>
+If you have any questions about this network, please feel free to contact me with 
+</div>
+<strong><a href="mailto:leongmacau1991@gmail.com">leongmacau1991@gmail.com</a></strong>
+<div>
+If you have any questions about the licence, please contact NVDIA Research group. You can find their mail address in here.
+  </div>
+<strong><a href="https://research.nvidia.com/publication/2017-10_Progressive-Growing-of"></a>https://research.nvidia.com/publication/2017-10_Progressive-Growing-of</strong>
