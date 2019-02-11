@@ -85,7 +85,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, faceB, labels,faceA,
         mixed_norms = tf.sqrt(tf.reduce_sum(tf.square(mixed_grads), axis=[1,2,3]))
         mixed_norms = tfutil.autosummary('Loss/mixed_norms', mixed_norms)
         gradient_penalty = tf.square(mixed_norms - wgan_target)
-        print(mixed_images_out)
+
     loss += gradient_penalty * (wgan_lambda / (wgan_target**2))
 
     with tf.name_scope('EpsilonPenalty'):
@@ -100,8 +100,7 @@ def D_wgangp_acgan(G, D, opt, training_set, minibatch_size, faceB, labels,faceA,
             label_penalty_fakes = tfutil.autosummary('Loss/label_penalty_fakes', label_penalty_fakes)
 
         loss += (1 * label_penalty_reals + 1*label_penalty_fakes) * cond_weight
-    print("loss")
-    print(loss)
+
     return loss
 
 #----------------------------------------------------------------------------

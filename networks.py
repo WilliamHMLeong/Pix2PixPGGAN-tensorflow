@@ -4,6 +4,8 @@
 # 4.0 International License. To view a copy of this license, visit
 # http://creativecommons.org/licenses/by-nc/4.0/ or send a letter to
 # Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+# Modified by William Leong in 2019/2/9
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import tensorflow as tf
@@ -202,6 +204,7 @@ def G_paper(
     latents_conv3 = convG(latents_conv2, 512, 3, 4, 1)  # H/4, 2*2
     latents_in = tf.nn.pool(latents_conv3, (1, 1), 'AVG', 'SAME')
 
+    # latents_in = tf.nn.batch_normalization(latents_in)
 
 
 
@@ -220,8 +223,7 @@ def G_paper(
                     x = tf.reshape(x, [-1, nf(res-1), 4, 4])
 
                     x = PN(act(apply_bias(x)))
-                    print('x1')
-                    print(x)
+
                 with tf.variable_scope('Conv'):
                     x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
             else: # 8x8 and up
