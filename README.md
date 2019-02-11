@@ -79,7 +79,7 @@ cudnn:7.1.3
   <img src="./sample/target2.png" width="200" title="hover text">
   <img src="./sample/target3.png" width="200" title="hover text">
 </p>
-  <div align="center">Graph 6: targets</div>
+  <div align="center">Graph 6: Targets</div>
   <div>
   None U-Net structure results are still in training, here is the intermediate training results. The weight file can download in this url.
 </div>
