@@ -5,15 +5,15 @@ The code is designed to be extended easily. You can change the code such as inpu
 <p align="center">
   <img src="./structure/None U-Net Structure.png" width="700" title="hover text">
 </p>
-<span align="center">Graph 1: None U-Net Structure</span>
-<div>
+  <span align="center">Graph 1: None U-Net Structure</span>
+ <div>
 None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need to use CNN to capture condition images’ features. The counts of CNN layers are the more the better, which are depended on our graphic card. The short coming of None U-net structure is the G loss is higher than D loss.
  </div>
  
  <p align="center">
   <img src="./structure/U-Net Structure.png" width="700" title="hover text">
 </p>
-<span align="center">Graph 1: U-Net Structure</span>
+<span align="center">Graph 2: U-Net Structure</span>
 <div>
 U-Net Structure is a better way to implement Pix2Pix PGGAN. The feature of U-Net Structure is wo concatenate specific layers of G based on None U-Net structure. The U-Net Structure can reduce the G loss and get better results. The short coming of U-Net structure is it will take more time on training.
  </div>
@@ -33,5 +33,9 @@ We can use dataset-tool to change the dataset into tf-record format. Put faceA t
   <code>python dataset_tool.py create_newoneface C:/Users/Output/faceA/ C:/Input/faceA/ --cx=150 --cy=150 --ix=128 --iy=128</code>
   </pre>
   <div>
-  --cx and --cy are the center location of the images. --ix and --iy are the inner area of images which are the targets. Details are shown in the below graph. ix and iy must be 2n.
+  --cx and --cy are the center location of the images. --ix and --iy are the inner area of images which are the targets. Details are shown in the below graph. ix and iy must be 2**n.
   </div>
+<p align="center">
+  <img src="./structure/datacapture.png" width="700" title="hover text">
+</p>
+<span align="center">Graph 3: datacapture</span>
