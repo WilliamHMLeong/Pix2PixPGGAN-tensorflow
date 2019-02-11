@@ -94,7 +94,7 @@ cudnn:7.1.3
   You can run logLoader.py to read the loss.
   <pre><code>python logLoader.py
 </code></pre>
-<h2>Future Works</h2>
+<h2>Future Work</h2>
   <ul>
   <li>Release an enhancer to make the results more beautiful.
   </li>
