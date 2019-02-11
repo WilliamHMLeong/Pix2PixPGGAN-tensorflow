@@ -84,12 +84,17 @@ cudnn:7.1.3
   <div>
   None U-Net structure results are still in training, here is the intermediate training results. The weight file can be download in this url.
 </div>
-<strong><a href="https://research.nvidia.com/publication/2017-10_Progressive-Growing-of">https://research.nvidia.com/publication/2017-10_Progressive-Growing-of</a></strong>
+<strong><a href="https://drive.google.com/open?id=16frTY2XWT1szegRmbsjvJPwejZNMYBAU">https://drive.google.com/open?id=16frTY2XWT1szegRmbsjvJPwejZNMYBAU</a></strong>
 <div>
   U-Net structure results are coming soon.
   </div>
 <h2>Testing</h2>
   You can run import_example.py to input images, then generate specific outputs. For more details, you can read the code.
+  <pre><code>python import_example.py
+</code></pre>
+  You can run logLoader.py to read the loss.
+  <pre><code>python logLoader.py
+</code></pre>
 <h2>Future Works</h2>
   <ul>
   <li>Release an enhancer to make the results more beautiful.
