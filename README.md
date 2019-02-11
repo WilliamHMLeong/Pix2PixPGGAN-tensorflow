@@ -1,9 +1,8 @@
 # Pix2Pix PGGAN(Using PGGAN as Pix2Pix for generating high resolution images)
-<div>
   This is an implementation of Pix2Pix PGGAN on python 3.6 and Tensorflow. People can input original images such as face edges or some other objects and get the specific results from the outputs with high resolution. Pix2Pix PGGAN is based on Progressive Growth GAN released by NVDIA. There are two structures such as None U-Net structure and U-Net structure will be implemented in the Pix2Pix PGGAN.
 The code is designed to be extended easily. You can change the code such as input resolution and output resolution to what you need easily.
-  </div>
 # The structure of Pix2Pix PGGAN
+
 <p align="center">
   <img src="./structure/None U-Net Structure.png" width="700" title="hover text">
 </p>
@@ -20,10 +19,8 @@ None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need
 U-Net Structure is a better way to implement Pix2Pix PGGAN. The feature of U-Net Structure is wo concatenate specific layers of G based on None U-Net structure. The U-Net Structure can reduce the G loss and get better results. The short coming of U-Net structure is it will take more time on training.
  </div>
 # Data preparation
-<div>
  Celeba-HQ dataset’s 20,000 images are used as targets in the demo. Face edges images(condition images) with hair color masks are captured by Celeba-HQ dataset. Hair color masks are captured by using M-RCNN released by Facebook.
 We can download Celeba-HQ in this url.
-  </div>
 <div>
 https://drive.google.com/drive/folders/1jU-hzyvDZNn_M3ucuvs9xxtJNc9bPLGJ
  </div>
