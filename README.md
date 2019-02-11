@@ -114,6 +114,6 @@ If you have any questions about this network, please feel free to contact me wit
 </div>
 <strong><a href="mailto:leongmacau1991@gmail.com">leongmacau1991@gmail.com</a></strong>
 <div>
-If you have any questions about the licence, please contact NVDIA Research group. You can find their mail address in here.
+If you have any questions about the license, please contact NVDIA Research group. You can find their mail address in here.
   </div>
 <strong><a href="https://research.nvidia.com/publication/2017-10_Progressive-Growing-of">https://research.nvidia.com/publication/2017-10_Progressive-Growing-of</a></strong>
