@@ -54,14 +54,37 @@ python train.py
 
 Here is my training environment.
 <div>
-GPU	GTX 1080Ti
+GPU:GTX 1080Ti
   </div>
   <div>
-RAM	16GB
+RAM:16GB
   </div>
   <div>
-CUDA	9.0
+CUDA:9.0
   </div>
   <div>
-cudnn	7.1.3
+cudnn:7.1.3
   </div>
+  
+  # Results
+  <div>
+  None U-Net structure results are still in training, here is the intermediate results.
+</div>
+<div>
+  U-Net structure results are coming soon.
+  </div>
+  # Testing
+  You can run import_example.py to input images, then generate specific outputs. For more details, you can read the code.
+  # Future Works
+  <ul>
+  <li>Release an enhancer to make the results more beautiful.
+  </li>
+</ul>
+<ul>
+  <li>There are many interesting way to improve this gan. For example, we can concat some pose features into the latens_in to induct the gan to generate images with specific poses. 
+  </li>
+</ul>
+<ul>
+  <li>What’s more, we can use this network to generate people with specific clothes. It’s difficult to get precise results, but it’s one more way to achieve this goal.
+  </li>
+</ul>
