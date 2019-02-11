@@ -21,9 +21,7 @@ U-Net Structure is a better way to implement Pix2Pix PGGAN. The feature of U-Net
 # Data preparation
  Celeba-HQ dataset’s 20,000 images are used as targets in the demo. Face edges images(condition images) with hair color masks are captured by Celeba-HQ dataset. Hair color masks are captured by using M-RCNN released by Facebook.
 We can download Celeba-HQ in this url.
-<div>
 https://drive.google.com/drive/folders/1jU-hzyvDZNn_M3ucuvs9xxtJNc9bPLGJ
- </div>
  <div>
 Condition images can be face edges, scene images or other interesting objects. Condition images are ‘tips’ for G to learn. However, specific objects’ images which have spatial similarity with targets are better than the images which have no spatial similarity with targets.
   </div>
