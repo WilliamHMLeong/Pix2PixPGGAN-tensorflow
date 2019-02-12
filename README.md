@@ -7,7 +7,7 @@
 </p>
   <div align="center">Graph 1: None U-Net Structure</div>
  <div>
-None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need to use CNN to capture condition images’ features. The counts of CNN layers are the more the better, which are depended on our graphic card. The short coming of None U-net structure is the G loss is higher than D loss.
+None U-Net Structure is a simple method to implement Pix2Pix PGGAN. We only need to use CNN to capture condition images’ features. The counts of CNN layers are the more the better, which are depended on our graphic card. The short coming of None U-Net structure is the G loss is higher than the U-Net structure.
  </div>
  
  <p align="center">
