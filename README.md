@@ -103,10 +103,6 @@ cudnn:7.1.3
   <li>There are many interesting way to improve this gan. For example, we can concat some pose features into the latens_in to induct the gan to generate images with specific poses. 
   </li>
 </ul>
-<ul>
-  <li>What’s more, we can use this network to generate people with specific clothes. It’s difficult to get precise results, but it’s one more way to achieve this goal.
-  </li>
-</ul>
 
 <h2>Contact</h2>
 <div>
