@@ -179,9 +179,10 @@ def G_paper(
     pixelnorm_epsilon   = 1e-8,         # Constant epsilon for pixelwise feature vector normalization.
     use_leakyrelu       = True,         # True = leaky ReLU, False = ReLU.
     dtype               = 'float32',    # Data type to use for activations and outputs.
-    fused_scale         = True,         # True = use fused upscale2d + conv2d, False = separate upscale2d layers.
+    fused_scale         = False,         # True = use fused upscale2d + conv2d, False = separate upscale2d layers.
     structure           = None,         # 'linear' = human-readable, 'recursive' = efficient, None = select automatically.
     is_template_graph   = False,        # True = template graph constructed by the Network class, False = actual evaluation.
+    U_Net = True,                       # True = U-Net structure is built.
     **kwargs):                          # Ignore unrecognized keyword args.
 
     if face == False:
@@ -195,18 +196,16 @@ def G_paper(
     if structure is None: structure = 'linear' if is_template_graph else 'recursive'
     act = leaky_relu if use_leakyrelu else tf.nn.relu
 
-    latents_in.set_shape([None, 3, 256, 256]) # Set images' size in here
-    latent_trans = tf.transpose(latents_in, [0, 2, 3, 1])
-
-    latents_conv1 = convG(latent_trans, 64, 3, 4, 1)  # H/4, 64*64
-
-    latents_conv2 = convG(latents_conv1, 256, 3, 8, 1)  # H/8, 8*8
-    latents_conv3 = convG(latents_conv2, 512, 3, 4, 1)  # H/4, 2*2
-    latents_in = tf.nn.pool(latents_conv3, (1, 1), 'AVG', 'SAME')
+    latents_image = latents_in
+    latents_image.set_shape([None, 3, 256, 256]) # Set images' size in here
+    latent_trans = tf.transpose(latents_image, [0, 2, 3, 1])
+    latents_conv1 = convG(latent_trans, 64, 5, 4, 1)  # H/4, 64*64
+    latents_conv2 = convG(latents_conv1, 256, 5, 4, 1)  # H/8, 16*16
+    latents_conv3 = convG(latents_conv2, 256, 5, 4, 1)  # H/4, 4*4
+    latents_conv4 = convG(latents_conv3, 512, 5, 2, 1)  # H/4, 2*2
+    latents_in = tf.nn.pool(latents_conv4, (1, 1), 'AVG', 'SAME')
 
     # latents_in = tf.nn.batch_normalization(latents_in)
-
-
 
     labels_in.set_shape([None, label_size])
     combo_in = tf.cast(latents_in,dtype)
@@ -217,25 +216,53 @@ def G_paper(
 
         with tf.variable_scope('%dx%d' % (2**res, 2**res)):
             if res == 2: # 4x4
-                if normalize_latents: x = pixel_norm(x, epsilon=pixelnorm_epsilon)
-                with tf.variable_scope('Dense'):
-                    x = dense(x, fmaps=nf(res-1)*16, gain=np.sqrt(2)/4, use_wscale=use_wscale) # override gain to match the original Theano implementation
-                    x = tf.reshape(x, [-1, nf(res-1), 4, 4])
+                if U_Net == True:
+                    if normalize_latents: x = pixel_norm(x, epsilon=pixelnorm_epsilon)
+                    with tf.variable_scope('Dense'):
+                        x = dense(x, fmaps=nf(res - 1) * 16, gain=np.sqrt(2) / 4,
+                                  use_wscale=use_wscale)  # override gain to match the original Theano implementation
+                        x = tf.reshape(x, [-1, nf(res - 1), 4, 4])
+                        x = tf.concat([x,tf.transpose(latents_conv3,[0,3,1,2])],axis=1)
+                        x = PN(act(apply_bias(x)))
 
-                    x = PN(act(apply_bias(x)))
-
-                with tf.variable_scope('Conv'):
-                    x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
-            else: # 8x8 and up
-                if fused_scale:
-                    with tf.variable_scope('Conv0_up'):
-                        x = PN(act(apply_bias(upscale2d_conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+                    with tf.variable_scope('Conv'):
+                        x = PN(act(apply_bias(conv2d(x, fmaps=nf(res - 1), kernel=3, use_wscale=use_wscale))))
                 else:
-                    x = upscale2d(x)
-                    with tf.variable_scope('Conv0'):
+                    if normalize_latents: x = pixel_norm(x, epsilon=pixelnorm_epsilon)
+                    with tf.variable_scope('Dense'):
+                        x = dense(x, fmaps=nf(res-1)*16, gain=np.sqrt(2)/4, use_wscale=use_wscale) # override gain to match the original Theano implementation
+                        x = tf.reshape(x, [-1, nf(res-1), 4, 4])
+                        x = PN(act(apply_bias(x)))
+
+                    with tf.variable_scope('Conv'):
                         x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
-                with tf.variable_scope('Conv1'):
-                    x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+            else: # 8x8 and up
+                if U_Net == True:
+                    if fused_scale:
+                        with tf.variable_scope('Conv0_up'):
+                            x = PN(act(apply_bias(upscale2d_conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+                    else:
+                        x = upscale2d(x)
+                        if res == 16:
+                            x = tf.concat([x, tf.transpose(latents_conv2, [0, 3, 1, 2])], axis=1)
+                        if res == 64:
+                            x = tf.concat([x, tf.transpose(latents_conv1, [0, 3, 1, 2])], axis=1)
+                        if res == 256:
+                            x = tf.concat([x, tf.transpose(latent_trans, [0, 3, 1, 2])], axis=1)
+                        with tf.variable_scope('Conv0'):
+                            x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+                    with tf.variable_scope('Conv1'):
+                        x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+                else:
+                    if fused_scale:
+                        with tf.variable_scope('Conv0_up'):
+                            x = PN(act(apply_bias(upscale2d_conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+                    else:
+                        x = upscale2d(x)
+                        with tf.variable_scope('Conv0'):
+                            x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
+                    with tf.variable_scope('Conv1'):
+                        x = PN(act(apply_bias(conv2d(x, fmaps=nf(res-1), kernel=3, use_wscale=use_wscale))))
 
             return x
 
